@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\RegisterRequest;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -23,27 +24,31 @@ public function index(){
 
 return view("auth.login");
 }  
-  public function login(Request $request)
+  public function login(LoginRequest $request)
     {
-        if (!$request) {
-            return back();
-        }
+        // dd($request);
+        // if (!$request) {
+        //     return back();
+        // }
 
+// dd(Auth::attempt(['email' => $request->email,'password' => $request->password]));
+// dd($request->password);
 
+        if (!Auth::attempt(['email' => $request->email,'password' => $request->password])) {
+// dd(['email' => $request->email,'password' => $request->password]);
 
-        if (Auth::attempt(['email' => $request->email,'password' => $request->password])) {
+            $user =   $this->iUserRepository->findByEmail($request->email);
+       
 
-            return redirect('/')->with('success', 'Login successful');
+            Auth::login($user);
+           
+            $request->session()->regenerate();
+    
+            return redirect("/dashboard")->with('succuss','login sucessful');
         }
  
-     $user =   $this->iUserRepository->findByEmail($request->email);
-       
-
-     Auth::login($user);
-       
-     $request->session()->regenerate();
-
-        return redirect("/");
+     
+        return redirect('/')->with('success', 'Login not successful');
     }
  
     public function logout(Request $request)
@@ -66,14 +71,18 @@ return view("auth.login");
         }
        
 
+       try {
         $data = $request->all();
         $data['role_id'] = 3;
         // dd($data);
 
-        $data['password'] = bcrypt($data['password']);
+        $data['password'] =Hash::make($data['password']);
 
         $this->iUserRepository->createUser($data);
 
         return redirect("/login");
+       } catch (\Throwable $th) {
+        return redirect('/register')->with('errour','$th');
+       }
     }
 }

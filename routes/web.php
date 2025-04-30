@@ -28,12 +28,11 @@ Route::get('/forms', function () {
 route::resource('users',UserController::class);
 
 // auth routes-----------------------------
-Route::get('/login', function () {
-    return view('auth.login');
-})->name('login');
-Route::get('/register', function () {
-    return view('auth.register');
-})->name('register');
+Route::get('/login', function () { return view('auth.login');})->name('login');
+
+Route::get('/register', function (){ return view('auth.register');} )->name('register');
+Route::get('/profil',function(){return view('users.profil');})->name('profil');
+
 Route::post('/login1', [AuthController::class, 'login'])->name('login');
 Route::post('/register1', [AuthController::class, 'register'])->name('register');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
