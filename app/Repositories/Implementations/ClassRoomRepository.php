@@ -8,7 +8,9 @@ use App\Repositories\IClasseRoomRepository;
 
 class ClassRoomRepository implements IClasseRoomRepository{
     public function getAllClassRooms(){
-        return ClasseRoom::all();
+        // dd( ClasseRoom::all());
+        $classeroom= ClasseRoom::all();
+        return $classeroom ;
 
     }
     public function deleteClasse($id){

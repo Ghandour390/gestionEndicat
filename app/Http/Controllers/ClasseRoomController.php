@@ -26,7 +26,13 @@ class ClasseRoomController extends Controller
         $title="gestion classerooms";
         $thead =['capacitie','name','numero'];
         $route='/classeroom';
-        return view('dashboard.admin',compact('data','title','thead'));
+        $column=[
+            'capacitie'=>'text',
+            'namne'=>'texte',
+            'nemero'=>'numeric'
+
+        ];
+        return view('dashboard.admin',compact('data','title','thead','column','route'));
     }
 
     /**

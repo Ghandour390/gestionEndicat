@@ -14,14 +14,37 @@ class RessourceController extends Controller
 
     public function __construct(IRessourceRepository $iRessourceRepository)
     {
-        $this->iRessourceRepository=$iRessourceRepository;
+        $this->iRessourceRepository = $iRessourceRepository;
     }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('ressources.index');
+        $cours = $this->iRessourceRepository->getAllCours();
+        $ressources = $this->iRessourceRepository->getAllRessources();
+        $title = "Gestion des ressources";
+        $thead = ['titre', 'description', 'cours_id'];
+        $route = '/ressources';
+        $column = [
+            'titre' => 'text',
+            'description' => 'text',
+            'select' => [
+                'cours_id' => $cours
+            ]
+        ];
+        
+        return view('dashboard.admin', compact('ressources', 'title', 'thead', 'route', 'column'));
+    }
+
+    /**
+     * Get the details of a specific resource.
+     */
+    public function getDetails($id)
+    {
+        $ressource = $this->iRessourceRepository->getRessourceById($id);
+        return response()->json($ressource);
     }
 
     /**

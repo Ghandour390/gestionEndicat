@@ -1,7 +1,10 @@
 <?php
 namespace App\Repositories;
-interface IRessourceRepository{
- public function getallRessources();
- public function delete($id);
- public function createRessource(array $Data);
+
+interface IRessourceRepository {
+    public function getAllRessources();
+    public function getRessourceById($id);
+    public function getAvailableCours();
+    public function delete($id);
+    public function createRessource(array $Data);
 }

@@ -69,7 +69,7 @@ class VideoController extends Controller
      */
     public function edit(Video $video)
     {
-        //
+        return response()->json($video);
     }
 
     /**

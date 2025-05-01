@@ -6,15 +6,18 @@ use App\Models\Document;
 use App\Http\Requests\StoreDocumentRequest;
 use App\Http\Requests\UpdateDocumentRequest;
 use App\Repositories\IDocumentRepository;
+use App\Repositories\IRessourceRepository;
 
 
 class DocumentController extends Controller
 {
     protected $idocumentrepository;
+    protected $iressourcerepository;
 
-    public function __construct(IDocumentRepository $iDocumentRepository)
+    public function __construct(IDocumentRepository $iDocumentRepository,IRessourceRepository $iressourcerepository)
     {
         $this->idocumentrepository=$iDocumentRepository;
+        $this->iressourcerepository=$iressourcerepository;
     }
     /**
      * Display a listing of the resource.
@@ -22,10 +25,19 @@ class DocumentController extends Controller
     public function index()
     {
         $data = $this->idocumentrepository->getAllDocuments();
-        //  dd($data);
+        $ressources=$this->iressourcerepository->getallRessources();
         $title = "gestion Document";
         $thead =['document'];
-        return view('dashboard.admin',compact('data','title','thead'));
+        $route='documents';
+        $column=[
+            'document'=>'texte',
+            'select'=>[
+                'ressource_id'=>$ressources
+            ]
+            ];
+      
+        return view('dashboard.admin',compact('data','title','thead','route','column'));
+       
     }
 
     /**

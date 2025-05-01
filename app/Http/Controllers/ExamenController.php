@@ -6,81 +6,73 @@ use App\Models\Examen;
 use App\Http\Requests\StoreExamenRequest;
 use App\Http\Requests\UpdateExamenRequest;
 use App\Repositories\IExamenRepository;
-
+use App\Repositories\ICoursRepository;
 
 class ExamenController extends Controller
 {
     protected $iExamenRepository;
-    public function __construct(IExamenRepository $iExamenRepository)
+    protected $iCoursRepository;
+    
+    public function __construct(IExamenRepository $iExamenRepository, ICoursRepository $iCoursRepository)
     {
-        $this->iExamenRepository=$iExamenRepository;
-    }
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        $data= $this->iExamenRepository->getAllExamens();
-        // dd($data);
-        $title ="gestion Examen";
-        $thead =['note','date_examen','heure_debut','heure_fin','status'];
-        $route='/examen';
-        $status=['pinding', 'encoure', 'annule'];
-        $column=[
-            'date_examen'=>'date',
-            'heure_debut'=>'time',
-            'heure_fin'=>'time',
-            'select'=>['status'=>$status],
-        ];
-        return view('dashboard.admin',compact('data','title','thead','route','column'));
-      
+        $this->iExamenRepository = $iExamenRepository;
+        $this->iCoursRepository = $iCoursRepository;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    public function index()
+    {
+        $data = $this->iExamenRepository->getAllExamens();
+        $title = "Gestion des examens";
+        $thead = ['note', 'date_examen', 'heure_debut', 'heure_fin', 'status', 'cour_id'];
+        $route = '/examens'; 
+        $column = [
+            'note' => 'number',
+            'date_examen' => 'date',
+            'heure_debut' => 'time',
+            'heure_fin' => 'time',
+            'status' => [
+                'select' => ['pinding'=>'pinding', 'encoure'=>'encoure', 'annule'=>'annule']
+            ],
+            'cour_id' => [
+                'select' => $this->iCoursRepository->getAllCours()
+            ]
+        ];
+        
+        return view('dashboard.admin', compact('data', 'title', 'thead', 'route', 'column'));
+    }
+
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreExamenRequest $request)
     {
-        //
+        $this->iExamenRepository->createExamen($request->validated());
+        return redirect()->back()->with('success', 'Examen créé avec succès');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Examen $examen)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Examen $examen)
     {
-        //
+        return response()->json($examen);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateExamenRequest $request, Examen $examen)
     {
-        //
+        $examen->update($request->validated());
+        return redirect()->back()->with('success', 'Examen mis à jour avec succès');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Examen $examen)
+    public function destroy($id)
     {
-        //
+        if($this->iExamenRepository->deleteExamen($id)) {
+            return redirect()->back()->with('success', 'Examen supprimé avec succès');
+        }
+        return redirect()->back()->with('error', 'Une erreur est survenue');
     }
 }

@@ -10,7 +10,7 @@ enum Specialite
     case php;
     case javascript;
 
-    public function label(): string
+    public  function label(): string
     {
         return match ($this) {
             self::Java => 'Java',

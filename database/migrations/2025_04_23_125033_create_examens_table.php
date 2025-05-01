@@ -17,7 +17,8 @@ return new class extends Migration
             $table->date('date_examen')->nullable();
             $table->time('heure_debut')->nullable();
             $table->time('heure_fin')->nullable();
-            $table->enum('status', ['pinding', 'encoure', 'annule'])->default('pinding'); // ou 'encoure' selon ton intention
+            $table->enum('status', ['pinding', 'encoure', 'annule'])->default('pinding');
+            $table->foreignId('cour_id')->constrained('cours')->onDelete('cascade');
             $table->timestamps();
         });
         

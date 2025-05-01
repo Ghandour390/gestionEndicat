@@ -9,6 +9,7 @@ use App\Http\Controllers\CoursController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\ExamenController;
 use App\Http\Controllers\FormateurController;
+use App\Http\Controllers\FormController;
 use App\Http\Controllers\RessourceController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -31,7 +32,7 @@ route::resource('users',UserController::class);
 Route::get('/login', function () { return view('auth.login');})->name('login');
 
 Route::get('/register', function (){ return view('auth.register');} )->name('register');
-Route::get('/profil',function(){return view('users.profil');})->name('profil');
+Route::get('/profil',function(){return view('dashboard.profil');})->name('profil');
 
 Route::post('/login1', [AuthController::class, 'login'])->name('login');
 Route::post('/register1', [AuthController::class, 'register'])->name('register');
@@ -69,12 +70,18 @@ route::resource('/roles',RoleController::class);
 
 
 // -------------classeRoom-----------------------------
-route::resource('/classerooms',ClasseRoomController::class);
+Route::get('classerooms',[ClasseRoomController::class,'index']);
 
 // -----------Examen-------------------------------
 Route::resource("/examens",ExamenController::class);
 // ----------------ressources-------------------------
 route::resource('/ressources',RessourceController::class);
+Route::get('/ressources/{id}/details', [RessourceController::class, 'getDetails'])->name('ressources.details');
 
 // ---------formateur----------------------------
 route::resource('/formateurs',FormateurController::class);
+Route::post('/formateurs/{id}/restore', [FormateurController::class, 'restore'])->name('formateurs.restore');
+
+// ---------toggle form----------------------------
+Route::get('/toggle-form', [FormController::class, 'toggleForm'])->name('toggle-form');
+Route::get('/{model}/{id}/edit-form', [FormController::class, 'edit'])->name('edit-form');

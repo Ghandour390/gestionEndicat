@@ -1,11 +1,10 @@
 @extends('layouts.app') 
 
-{{-- @section('content') --}
+@section('content') 
 {{-- @dd("drsrtrs") --}}
-<section id="profil" class="py-16 bg-white">
+<section id="profil" class="w-full bg-500 text-white p-4">
   <div class="container mx-auto px-4 max-w-3xl">
-    <h3 class="text-2xl font-bold text-blue-600 mb-6">Mon Profil</h3>
-    <div class="bg-gray-100 p-6 rounded-lg shadow-md">
+    <div class="w-full bg-gray-100 p-6 rounded-lg shadow-md">
       <div class="relative mb-6">
         <img src="{{ Auth::user()->cover ?? 'https://bookcoverzone.com/img/hero-slider/education_banner.jpg' }}" class="rounded-lg w-full h-48 object-cover" alt="cover" />
         <div class="absolute left-1/2 transform -translate-x-1/2 -bottom-10">
@@ -31,8 +30,8 @@
           <div>
             <label class="block text-sm font-medium">Sexe</label>
             <select name="sexe" class="mt-1 w-full border border-gray-300 rounded-md p-2">
-              <option value="Homme" {{ Auth::user()->sexe == 'Homme' ? 'selected' : '' }}>Homme</option>
-              <option value="Femme" {{ Auth::user()->sexe == 'Femme' ? 'selected' : '' }}>Femme</option>
+              <option value="Homme" {{ old('sexe', Auth::user()->sexe) === 'Homme' ? 'selected' : '' }}>Homme</option>
+              <option value="Femme" {{ old('sexe', Auth::user()->sexe) === 'Femme' ? 'selected' : '' }}>Femme</option>
             </select>
           </div>
           <div>
@@ -63,4 +62,4 @@
     </div>
   </div>
 </section>
-{{-- @endsection --}}
+@endsection

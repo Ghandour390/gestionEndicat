@@ -37,7 +37,7 @@ class ExamenPolicy
      */
     public function update(User $user, Examen $examen): bool
     {
-        return false;
+        return true;
     }
 
     /**

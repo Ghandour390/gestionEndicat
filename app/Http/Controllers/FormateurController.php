@@ -3,74 +3,31 @@
 namespace App\Http\Controllers;
 
 use App\Models\Formateur;
-use App\Http\Requests\StoreFormateurRequest;
-use App\Http\Requests\UpdateFormateurRequest;
-use App\Repositories\IFormateurRepository;
-
-
-class FormateurController extends Controller
+use App\Models\Role;
+use Illuminate\Http\Request;
+use App\Enums\Specialite;
+class FormateurController extends BaseController
 {
-
-    protected $iFormateurRepository;
-  
-
-    public function __construct(IFormateurRepository $iFormateurRepository)
+    public function __construct()
     {
-        $this->iFormateurRepository=$iFormateurRepository;
-    }
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        return view('formateurs.index');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $this->model = Formateur::class;
+        $this->relations = ['role', 'specialite'];
+        $this->routePrefix = '/formateurs';
+        
+        // Définir les colonnes et leurs types/relations
+        $this->columns = [
+            'name' => 'text',
+            'email' => 'email',
+            'specialite' => [
+                'select' => Specialite::cases(),
+               
+            ],
+            'role_id' => [
+                'select' => Role::where('name', 'formateur')->get()
+            ]
+        ];
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreFormateurRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Formateur $formateur)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Formateur $formateur)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateFormateurRequest $request, Formateur $formateur)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Formateur $formateur)
-    {
-        //
-    }
+    // Si vous avez besoin de logique spécifique aux formateurs,
+    // vous pouvez surcharger les méthodes du BaseController ici
 }

@@ -191,19 +191,21 @@
                                     @foreach ($data as $item)
                                     <tr>
                                     
-                                     @foreach ($item->getAttributes() as $key => $value)
-                                        @if(in_array($key, $thead) && !is_array($value) && $key != 'relations')
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{$value}}</td>
+                                     @foreach ($item->getAttributes() as $key => $valuea)
+                                        @if(in_array($key, $thead) && !is_array($valuea) && $key != 'relations')
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{$valuea}}</td>
                                         @endif
                                      @endforeach
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                          <form action="{{$route}}/{{$item->id}}?? /admins" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit">suprimie</button>
+                                            <button type="submit"><i class="fa-solid fa-trash"></i></button>
                                          </form>
                                         </td>
-                                    </tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                              @include('modalupdate')
+                                         </td>
                                     @endforeach
                                     
                                         

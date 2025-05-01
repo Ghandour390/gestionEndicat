@@ -6,24 +6,41 @@ use App\Models\Classe;
 use App\Http\Requests\StoreClasseRequest;
 use App\Http\Requests\UpdateClasseRequest;
 use App\Repositories\IClasseRepository;
+use App\Repositories\IClasseRoomRepository;
 
 
 
 class ClasseController extends Controller
 {
     protected $iclassrapository;
+    protected $iClasseroomRepository;
 
-    public function __construct(IClasseRepository $iClasseRepository)
+    public function __construct(IClasseRepository $iClasseRepository,IClasseRoomRepository $iClasseroomRepository)
     {
         $this->iclassrapository= $iClasseRepository;
+        $this->iClasseroomRepository=$iClasseroomRepository;
     }
     public function index()
     {
         $data=$this->iclassrapository->getAllClass();
+        $classerooms= $this->iClasseroomRepository->getAllClassRooms();
+        // dd($classeroom);
+    //   dd($classerooms);
        $title="gestion des classes";
-       $thead = ['nom'];
+       $thead = ['name'];
        $route='/classes';
-        return view("dashboard.admin",compact("data",'title','thead','route'));
+       $column=[
+        'name'=>'text',
+        'select'=>[
+            'classeroom_id'=>[
+                $classerooms
+            ]
+        ]
+
+            ];
+           
+
+        return view('dashboard.admin',compact('data','title','thead','route','column'));
     }
 
     /**
