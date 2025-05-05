@@ -10,6 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
@@ -42,6 +43,46 @@
     <script src="{{ asset('js/forms.js') }}"></script>
 </head>
 <body>
-    @yield('content')
+    {{-- @yield('content') --}}
+    
+    <script>
+        // Initialisation des composants Flowbite
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialisation des modals
+            const modals = document.querySelectorAll('[data-modal-toggle]');
+            modals.forEach(trigger => {
+                trigger.addEventListener('click', () => {
+                    const modalId = trigger.getAttribute('data-modal-target');
+                    const modal = document.getElementById(modalId);
+                    if (modal) {
+                        modal.classList.toggle('hidden');
+                    }
+                });
+            });
+
+            // Gestion de la fermeture des modals
+            document.querySelectorAll('[data-modal-hide]').forEach(closeBtn => {
+                closeBtn.addEventListener('click', () => {
+                    const modalId = closeBtn.getAttribute('data-modal-hide');
+                    const modal = document.getElementById(modalId);
+                    if (modal) {
+                        modal.classList.add('hidden');
+                    }
+                });
+            });
+
+            // Fermeture des modals en cliquant en dehors
+            document.querySelectorAll('.fixed.inset-0').forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.classList.add('hidden');
+                    }
+                });
+            });
+
+            // Initialisation des icônes Lucide
+            lucide.createIcons();
+        });
+    </script>
 </body>
 </html>

@@ -6,5 +6,7 @@ interface IUserRepository{
     public function deleteUser($id);
     public function createUser(array $Data);
     public function findByEmail($email);
+    public function getById($id);
+    public function updateUser($id, array $data);
     
 }

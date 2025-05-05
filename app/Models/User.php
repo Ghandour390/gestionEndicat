@@ -53,4 +53,16 @@ class User extends Authenticatable
     public function roles(){
         return $this->belongsTo(Role::class,'role_id');
     }
+    public function isAdmin()
+    {
+        return $this->roles->name === 'admin';
+    }
+    public function isFormateur()
+    {
+        return $this->roles->name === 'formateur';
+    }
+    public function isApprenant()
+    {
+        return $this->roles->name === 'apprenant';
+    }
 }

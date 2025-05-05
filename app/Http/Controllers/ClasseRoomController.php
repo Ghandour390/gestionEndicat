@@ -23,13 +23,14 @@ class ClasseRoomController extends Controller
     public function index()
     {
         $data= $this->iaclassroomrepository->getAllClassRooms();
+        // dd($data);
         $title="gestion classerooms";
-        $thead =['capacitie','name','numero'];
+        $thead =['capacite','name','numero'];
         $route='/classeroom';
         $column=[
-            'capacitie'=>'text',
-            'namne'=>'texte',
-            'nemero'=>'numeric'
+            'capacite'=>'text',
+            'name'=>'texte',
+            'numero'=>'numeric'
 
         ];
         return view('dashboard.admin',compact('data','title','thead','column','route'));

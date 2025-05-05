@@ -21,7 +21,32 @@ class DocumentRepository implements IDocumentRepository{
         return false;
     }
     public function createDocument(array $Data){
-        $document=$this->document::create($Data);
+        $document=new Document();
+        if (isset($Data['document']) && $Data['document'] instanceof UploadedFile) {
+            $document->document = $Data['document']->store('documents', 'public');
+        }
+        $ressource = Document::where('id', $Data['resource_id'])->first();
+        $document->ressource()->associate($ressource);
+        $document->save();
+        return $document;
     }
+
+    public function updateDocument($id, array $data){
+        $document=Document::find($id);
+        if($document){
+            if (isset($data['document']) && $data['document'] instanceof UploadedFile) {
+                $document->document = $data['document']->store('documents', 'public');
+            }
+            $ressource = Document::where('id', $data['resource_id'])->first();
+            $document->ressource()->associate($ressource);
+            return $document;
+        }
+        return null;
+    }
+    public function getById($id){
+        $document=$this->document->where('$id')->first();
+        return $document;
+    }
+
 
 }

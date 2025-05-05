@@ -6,7 +6,7 @@ use App\Models\Formateur;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Enums\Specialite;
-class FormateurController extends BaseController
+class FormateurController extends UserController
 {
     public function __construct()
     {

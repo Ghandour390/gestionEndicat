@@ -10,14 +10,11 @@ class Formateur extends User
     /** @use HasFactory<\Database\Factories\FormateurFactory> */
     use HasFactory;
     protected $fillable = [
-        'firstname',
-        'lastname',
-        'dateNaissance',
-        'photo',
-        'phone',
-        'email',
-        'password',
         'specialite',
+    ];
+
+    protected $casts = [
+        'specialite' => Specialite::class,
     ];
 
     public function role()

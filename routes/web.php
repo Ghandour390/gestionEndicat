@@ -83,5 +83,4 @@ route::resource('/formateurs',FormateurController::class);
 Route::post('/formateurs/{id}/restore', [FormateurController::class, 'restore'])->name('formateurs.restore');
 
 // ---------toggle form----------------------------
-Route::get('/toggle-form', [FormController::class, 'toggleForm'])->name('toggle-form');
-Route::get('/{model}/{id}/edit-form', [FormController::class, 'edit'])->name('edit-form');
+

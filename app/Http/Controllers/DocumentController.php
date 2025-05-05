@@ -24,19 +24,20 @@ class DocumentController extends Controller
      */
     public function index()
     {
-        $data = $this->idocumentrepository->getAllDocuments();
+        $documents = $this->idocumentrepository->getAllDocuments();
         $ressources=$this->iressourcerepository->getallRessources();
-        $title = "gestion Document";
-        $thead =['document'];
-        $route='documents';
-        $column=[
-            'document'=>'texte',
-            'select'=>[
-                'ressource_id'=>$ressources
-            ]
-            ];
+        // $title = "gestion Document";
+        // $thead =['document'];
+        // $route='documents';
+        // $column=[
+        //     'document'=>'texte',
+        //     'select'=>[
+        //         'ressource_id'=>$ressources
+        //     ]
+        //     ];
       
-        return view('dashboard.admin',compact('data','title','thead','route','column'));
+        // return view('dashboard.admin',compact('data','title','thead','route','column'));
+        return view('document.index',compact('documents','ressources'));
        
     }
 

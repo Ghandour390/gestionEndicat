@@ -22,13 +22,15 @@ class CoursController extends Controller
     public function index()
     {
         $data=$this->iacoursrepository->getAllCours();
+        // dd($data);
         
         $title="gestion cours";
-        $thead =['description','titre'];
+        $thead =['titre','description','caver'];
         $route='/cours';
         $column=[
             'titre'=>'text',
-            'description'=>'text'
+            'description'=>'text',
+            'caver'=>'file'
         ];
         return view('dashboard.admin',compact('data','title','thead','route','column'));
     }

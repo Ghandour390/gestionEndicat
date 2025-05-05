@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories\Implementations;
 
+use App\Models\Ressource;
 use App\Models\Video;
 use App\Repositories\IVideoRepository;
 
@@ -22,8 +23,21 @@ class VideoRepository implements IVideoRepository{
     }
 
     public function createVideo($Data){
-        $Video=$this->video->create( $Data);
+        $Video=new Video();
+        $Video->contenu=$Data['contenu'];
+        $ressource = Ressource::where('id', $Data['ressource_id'])->first();
+        $Video->ressource()->associate($ressource);
+        $Video->save();
         return $Video;
+    }
+
+    public function updateVideo($id, array $data){
+        $video=Video::find($id);
+        if($video){
+            $video->update($data);
+            return $video;
+        }
+        return null;
     }
 
 }

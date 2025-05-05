@@ -58,10 +58,7 @@ class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black bg-op
                        <option value="{{ $item }}">{{ ucfirst($item) }}</option>
                    @endforeach
                </select>
-           @endif
-
-            
-    </div>
+            </div>
            @else
                <div>
                    <label for="{{ $value }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ $key }}</label>
@@ -87,5 +84,7 @@ class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black bg-op
 </div>
 
               <!-- Modal footer -->
-          
+     
+              
+              
   

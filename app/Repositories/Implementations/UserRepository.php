@@ -41,6 +41,27 @@ class UserRepository implements IUserRepository{
     public function findByEmail($email){
         return $this->user::where('email', $email)->first();
     }
+    public function getById($id){
+      $user=$this->user->where('$id')->first();
+      return $user;
+    }
+
+    public function updateUser($id, array $data){
+        $user = User::find($id);
+        if ($user) {
+          $user = new User();
+          $user->firstname = $data['firstname'];
+          $user->lastname = $data['lastname'];  
+          $user->email = $data['email'];
+          $user->password = bcrypt($data['password']);
+          $user->phone = $data['phone'];
+          $role = Role::where('id', $data['role_id'])->first();
+          $user->roles()->associate($role);
+            $user->save();
+            return $user;
+        }
+        return null;
+    }
     
 
 

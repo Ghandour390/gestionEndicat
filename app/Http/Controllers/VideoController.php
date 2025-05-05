@@ -25,19 +25,20 @@ class VideoController extends Controller
      */
     public function index()
     {
-        $data=$this->iVideoRepository->getAllVideos();
+        $vidieo=$this->iVideoRepository->getAllVideos();
         $ressource=$this->iRessourceRepository->getallRessources();
-        $title="gestion videos";
-        $thead =['contenu','titre'];
-        $route="/videos";
-        $column=[
-            'titre'=>'text',
-            'contenu'=>'file',
-            'select'=>[
-                'ressource_id'=>$ressource
-            ]
-        ];
-        return view('dashboard.admin',compact('data','title','thead','route','column'));
+        // $title="gestion videos";
+        // $thead =['contenu','titre'];
+        // $route="/videos";
+        // $column=[
+        //     'titre'=>'text',
+        //     'contenu'=>'file',
+        //     'select'=>[
+        //         'ressource_id'=>$ressource
+        //     ]
+        // ];
+        // return view('dashboard.admin',compact('data','title','thead','route','column'));
+        return view('video.index',compact('vidieo','ressource'));
     }
 
     /**

@@ -32,35 +32,35 @@ class AdminController extends Controller
     {
 
 
-        $data = $this->iUserRepository->findAllusers();
-        $title = "gestion des utilisateurs";
-        $thead = ['lastname','firstname','phone','email'];
-        $roles= $this->iRoleRepository->getAllRoles();
-        $route = "/admin";
-
-        // dd($roles);
-        $column=[
-            'lastename'=>'texte',
-            'firstname'=>'texte',
-            'email'=>'email',
-            'phone'=>'Number',
-            'password'=>'password',
-            'select'=> [
-                'role_id'=>$roles
-                ]
-        ];
-
-        // dd($column);
-       return view('dashboard.admin', compact('data', 'title', 'thead','route','column'));
-    }
-    public function getUsers(){
-
+        $user = $this->iUserRepository->findAllusers();
         
+    //     $title = "gestion des utilisateurs";
+    //     $thead = ['lastname','firstname','phone','email','role'];
+        $roles= $this->iRoleRepository->getAllRoles();
+    //     $route = "admin";
+
+    //     // dd($roles);
+    //     $column=[
+    //         'lastename'=>'texte',
+    //         'firstname'=>'texte',
+    //         'email'=>'email',
+    //         'phone'=>'Number',
+    //         'password'=>'password',
+    //         'select'=> [
+    //             'role_id'=>$roles
+    //             ]
+    //     ];
+
+    //     // dd($column);
+    //    return view('dashboard.admin', compact('data', 'title', 'thead','route','column'));
+    return view('user.index',compact('users','roles'));
+    }
+    public function getbyId($id){
+        $edit=$this->iUserRepository->getById($id);
+        return response()->json($edit);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+  
     public function create()
     {
         //
@@ -96,11 +96,13 @@ class AdminController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateAdminRequest $request, Admin $admin)
+    public function update(UpdateAdminRequest $request)
     {
-        //
+        // dd($request->all());
+        $this->iUserRepository->updateUser($request->all(),$request->id);
+        return $this->index()->with('success','user update avec saccess');
     }
-
+   
     /**
      * Remove the specified resource from storage.
      */

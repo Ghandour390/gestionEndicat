@@ -11,11 +11,11 @@
             @include('components.layouts.dashboard.stats')
         </div>
         <div>
-            @include('forms')
+            {{-- @include('forms') --}}
         </div>
 
         @yield('content')
 
-        @include('components.layouts.dashboard.datashou')
+        {{-- @include('components.layouts.dashboard.datashou') --}}
     </main>
 </div>

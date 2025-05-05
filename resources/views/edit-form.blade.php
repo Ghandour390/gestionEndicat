@@ -11,7 +11,7 @@
             </a>
         </div>
 
-        <form method="POST" action="{{ $route.'/'.$item->id }}" class="p-6 space-y-5">
+        <form method="POST" action="{{ $route.'/'.$item }}" class="p-6 space-y-5">
             @csrf
             @method('PUT')
             

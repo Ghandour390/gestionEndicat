@@ -25,5 +25,6 @@ class ClassRoomRepository implements IClasseRoomRepository{
         $classeroom=ClasseRoom::create($Data);
         return $classeroom;
     }
+    
 
 }
