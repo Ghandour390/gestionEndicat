@@ -25,6 +25,12 @@ class StoreFormateurRequest extends FormRequest
             'firstname' => 'required|string|max:255',
             'lastname' => 'required|string|max:255',
             'email' => 'required|email|unique:formateurs,email',
+            'phone' => 'nullable|string|max:15',
+            'password' => 'required|string|min:8',
+            'role_id' => 'required|exists:roles,id',
+            'couver' => 'nullable|file|mimes:jpg,png|max:2048',
+           'specialite' => 'required|string|max:255',
+            
         ];
     }
 }

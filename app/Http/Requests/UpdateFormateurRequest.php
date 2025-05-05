@@ -11,7 +11,7 @@ class UpdateFormateurRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,15 @@ class UpdateFormateurRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'firstname' => 'required|string|max:255',
+            'lastname' => 'required|string|max:255',
+            'email' => 'required|email',
+            'password' => 'required|string',
+            'phone' => 'required|string|max:15',
+            'speciality' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
+            'dateNaissance' => 'required|date',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ];
     }
 }

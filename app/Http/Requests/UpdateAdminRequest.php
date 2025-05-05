@@ -11,7 +11,7 @@ class UpdateAdminRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,17 @@ class UpdateAdminRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'lastname' => 'required|string|max:255',
+            'firstname' => 'required|string|max:255',
+            'phone'=>'required|string',
+            'email' => 'required|email',
+            'password' => 'required|string|min:8',
+            'role_id'=>'required',
+            'couver' => 'nullable|file|mimes:jpg,png|max:2048',
+            'specialite' => 'nullable|string|max:255',
+            'date_naissance' => 'nullable|date',
+            'photo' => 'nullable|file|mimes:jpg,png|max:2048',
+            'numerodDeBadge' => 'nullable|string|max:255',
         ];
     }
 }

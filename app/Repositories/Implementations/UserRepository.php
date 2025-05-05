@@ -14,7 +14,7 @@ class UserRepository implements IUserRepository{
 
 
     public function findAllusers(){
-       return $this->user::with('roles')->get();
+       return $this->user::with('roles')->paginate(10);
     }
 
     public function deleteUser( $id ){

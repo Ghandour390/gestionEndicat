@@ -28,6 +28,10 @@ class StoreAdminRequest extends FormRequest
             'phone'=>'required|string',
             'email' => 'required|email',
             'password' => 'required|string|min:8',
+            'dateNaissance' => 'required|date',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'specialite' => 'required|string|max:255',
+            'numerodDeBadge' => 'required|integer|max:255',
             'role_id'=>'required',
         ];
     }

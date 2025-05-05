@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use AdminRepository;
+
+use App\Enums\Specialite;
 use App\Models\Admin;
 use App\Repositories\IRoleRepository;
 use App\Repositories\IUserRepository;
@@ -32,35 +33,14 @@ class AdminController extends Controller
     {
 
 
-        $user = $this->iUserRepository->findAllusers();
-        
-    //     $title = "gestion des utilisateurs";
-    //     $thead = ['lastname','firstname','phone','email','role'];
+        $users = $this->iUserRepository->findAllusers();
         $roles= $this->iRoleRepository->getAllRoles();
-    //     $route = "admin";
+        $specialites=Specialite::cases();
+    
+    return view('users.index',compact('users','roles','specialites'));
+ 
 
-    //     // dd($roles);
-    //     $column=[
-    //         'lastename'=>'texte',
-    //         'firstname'=>'texte',
-    //         'email'=>'email',
-    //         'phone'=>'Number',
-    //         'password'=>'password',
-    //         'select'=> [
-    //             'role_id'=>$roles
-    //             ]
-    //     ];
-
-    //     // dd($column);
-    //    return view('dashboard.admin', compact('data', 'title', 'thead','route','column'));
-    return view('user.index',compact('users','roles'));
     }
-    public function getbyId($id){
-        $edit=$this->iUserRepository->getById($id);
-        return response()->json($edit);
-    }
-
-  
     public function create()
     {
         //

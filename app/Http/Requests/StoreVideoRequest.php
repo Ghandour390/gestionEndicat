@@ -23,7 +23,7 @@ class StoreVideoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:255',
+           
             'contenu' => 'nullable|string',
             'ressource_id' => 'nullable|integer',
         ];

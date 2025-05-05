@@ -24,8 +24,9 @@ class StoreApprenantRequest extends FormRequest
         return [
             'firstname' => 'required|string|max:255',
             'lastname' => 'required|string|max:255',
-            'email' => 'required|email|unique:apprenants,email',
+            'email' => 'required|email|unique:users,email',
             'phone' => 'nullable|string|max:15',
+            'numerodDeBadge'=>'nulable|integer'
         ];
     }
 }

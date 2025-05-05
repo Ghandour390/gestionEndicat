@@ -24,7 +24,8 @@ class StoreCoursRequest extends FormRequest
         return [
             'titre' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'classe_id' => 'required|exists:classes,id',
+            'couver'=>'required|file|mimes:jpg,png,pdf|max:2048',
+            'classe_id' => 'nulable|exists:classes,id',
         ];
     }
 }

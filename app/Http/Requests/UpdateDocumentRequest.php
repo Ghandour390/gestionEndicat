@@ -11,7 +11,7 @@ class UpdateDocumentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class UpdateDocumentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'document' => 'required|file|mimes:pdf,doc,docx|max:2048',
+            'ressource_id' => 'required|integer',
         ];
     }
 }

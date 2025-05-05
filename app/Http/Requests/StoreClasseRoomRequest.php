@@ -16,6 +16,7 @@ class StoreClasseRoomRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'capacity' => 'required|integer|min:1',
+            'numero'=>'required|unique:classerooms,numero'
         ];
     }
 }

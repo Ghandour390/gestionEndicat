@@ -19,21 +19,6 @@ class UserController extends Controller
 
     public function index()
 {
-    $items = $this->IuserRepository->findAllusers()->load('roles');
-    $columns = ['lastname', 'firstname', 'email', 'role'];
-    
-    return view('dashboard.admin', [
-        'title' => 'Liste des Utilisateurs',
-        'thead' => $columns,
-        'data' => $items,
-        'column' => [
-            'lastname' => 'text',
-            'firstname' => 'text',
-            'email' => 'email',
-            'role' => 'text'
-        ],
-        'route' => '/users'
-    ]);
 }
 
 

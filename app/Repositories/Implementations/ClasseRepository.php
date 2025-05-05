@@ -1,8 +1,13 @@
 <?php
 namespace App\Repositories\Implementations;
 
+use App\Models\Apprenant;
 use App\Models\Classe;
+use App\Models\ClasseRoom;
+use App\Models\Etudier;
 use App\Repositories\IClasseRepository;
+use Auth;
+use DateTime;
 
 class ClasseRepository implements IClasseRepository{
     public function getAllClass(){
@@ -14,8 +19,10 @@ class ClasseRepository implements IClasseRepository{
     public function createClass($Data){
         $classe=new Classe();
         $classe->name=$Data['name'];
+        $classe->createdBy=Auth::user()->id;
         $classeroom = Classe::where('id', $Data['classroom_id'])->first();
         $classe->classRoom()->associate($classeroom);
+        // $classe->apprenants()->attach($Data['apprenantsIds']);
         $classe->save();
         return $classe;
     }
@@ -35,15 +42,19 @@ class ClasseRepository implements IClasseRepository{
         return null;
     }
     public function updateClass($id, array $data){
-        $class=Classe::find($id);
-        if($class){
-            $class->name=$data['name'];
-            $classeroom = Classe::where('id', $data['classroom_id'])->first();
-            $class->classRoom()->associate($classeroom);
-            $class->save();
-            return $class;
+        $classe=Classe::find($id);
+        if($classe){
+            $classe->name=$data['name'];
+            $classeroom = ClasseRoom::where('id', $data['classroom_id'])->first();
+            // $classe->apprenants()->attach($data['apprenantsIds']);
+            $classe->classRoom()->associate($classeroom);
+            $classe->save();
+            return $classe;
         }
         return null;
     }
+
+   
+   
 
 }

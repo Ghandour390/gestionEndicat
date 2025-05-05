@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void{
     Schema::create('etudier', function (Blueprint $table) {
-        $table->id();
+
         $table->foreignId('apprenant_id')->constrained('apprenants')->onDelete('cascade');
         $table->foreignId('classe_id')->constrained('classes')->onDelete('cascade');
         $table->string('niveau');
@@ -23,6 +23,7 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
+    
     public function down(): void
     {
         Schema::dropIfExists('etudier');

@@ -27,8 +27,12 @@ class CoursRepository implements ICoursRepository {
 
     public function createCour(array $Data) {
         $cour = new Cours();
+        if (isset($Data['couver']) && $Data['couver'] instanceof UploadedFile) {
+            $cour->cour = $Data['couver']->store('cours', 'public');
+        }
         $cour->titre = $Data['titre'];  
         $cour->description = $Data['description'];
+        
         $classe = Classe::where('id', $Data['classe_id'])->first();
         $cour->classe()->associate($classe);
         $cour->save();
@@ -37,6 +41,9 @@ class CoursRepository implements ICoursRepository {
     public function updateCour($id, array $data) {
         $cour = Cours::find($id);
         if($cour) {
+            if (isset($data['couver']) && $data['couver'] instanceof UploadedFile) {
+                $cour->cour = $data['couver']->store('cours', 'public');
+            }
             $cour->titre = $data['titre'];
             $cour->description = $data['description'];
             $classe = Classe::where('id', $data['classe_id'])->first();

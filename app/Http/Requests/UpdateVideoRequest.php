@@ -11,7 +11,7 @@ class UpdateVideoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class UpdateVideoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'ressource_id' => 'required|integer',
+            'contenu'=>'required|file|mimes:mp4,mov,avi,wmv|max:2048',
+            
         ];
     }
 }

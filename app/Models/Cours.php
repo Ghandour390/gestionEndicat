@@ -13,6 +13,7 @@ class Cours extends Model
     protected $fillable = [
         'titre',
         'description',
+        'couver'
     ];
 
     public function classe() {

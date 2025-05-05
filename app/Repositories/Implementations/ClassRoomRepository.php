@@ -25,6 +25,15 @@ class ClassRoomRepository implements IClasseRoomRepository{
         $classeroom=ClasseRoom::create($Data);
         return $classeroom;
     }
-    
+    public function updateClasseroom($id, array $data){
+        $classeroom=ClasseRoom::find($id);
+        if($classeroom){
+            $classeroom->name=$data['name'];
+            $classeroom->save();
+            return $classeroom;
+        }
+        return null;
+    }
+
 
 }

@@ -22,18 +22,20 @@ class ClasseRoomController extends Controller
      */
     public function index()
     {
-        $data= $this->iaclassroomrepository->getAllClassRooms();
+        $classerooms= $this->iaclassroomrepository->getAllClassRooms();
+        
         // dd($data);
-        $title="gestion classerooms";
-        $thead =['capacite','name','numero'];
-        $route='/classeroom';
-        $column=[
-            'capacite'=>'text',
-            'name'=>'texte',
-            'numero'=>'numeric'
+        // $title="gestion classerooms";
+        // $thead =['capacite','name','numero'];
+        // $route='/classeroom';
+        // $column=[
+        //     'capacite'=>'text',
+        //     'name'=>'texte',
+        //     'numero'=>'numeric'
 
-        ];
-        return view('dashboard.admin',compact('data','title','thead','column','route'));
+        // ];
+        // return view('dashboard.admin',compact('data','title','thead','column','route'));
+        return view('classeroom.index',compact('classerooms'));
     }
 
     /**
@@ -49,7 +51,9 @@ class ClasseRoomController extends Controller
      */
     public function store(StoreClasseRoomRequest $request)
     {
-        //
+        // dd($request->all());
+        $this->iaclassroomrepository->createClasseroom($request->all());
+        return $this->index()->with('success','classeroom create avec saccess');
     }
 
     /**
@@ -73,7 +77,9 @@ class ClasseRoomController extends Controller
      */
     public function update(UpdateClasseRoomRequest $request, ClasseRoom $classeRoom)
     {
-        //
+        // dd($request->all());
+        $this->iaclassroomrepository->updateClasseroom($request->all(),$request->id);
+        return $this->index()->with('success','classeroom update avec saccess');
     }
 
     /**
@@ -81,6 +87,7 @@ class ClasseRoomController extends Controller
      */
     public function destroy(ClasseRoom $classeRoom)
     {
-        //
+        $this->iaclassroomrepository->deleteClasse($classeRoom->id);
+        return $this->index()->with('success','classeroom suprimie avec success');
     }
 }

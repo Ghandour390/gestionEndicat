@@ -22,8 +22,10 @@ class StoreExamenRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:255',
-            'date' => 'required|date',
+            'date-examen' => 'required|date',
+            'heure-debut' => 'required|date_format:H:i',
+            'heure-fin' => 'required|date_format:H:i|after:heure-debut',
+            'duree' => 'required|integer|min:1',
             'cours_id' => 'required|exists:cours,id',
         ];
     }
