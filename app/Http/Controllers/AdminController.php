@@ -53,7 +53,7 @@ class AdminController extends Controller
     {
     // dd($request->all());
        $this->iUserRepository->createUser($request->all());
-        return $this->index()->with('success','user create avec saccess');
+        return redirect()->route('dashboard.admin');
  
     }
 
@@ -79,8 +79,8 @@ class AdminController extends Controller
     public function update(UpdateAdminRequest $request)
     {
         // dd($request->all());
-        $this->iUserRepository->updateUser($request->all(),$request->id);
-        return $this->index()->with('success','user update avec saccess');
+        $this->iUserRepository->updateUser($request->id,$request->all());
+        return redirect()->route('dashboard.admin')->with('success','user update avec saccess');
     }
    
     /**
@@ -88,7 +88,8 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
+        // dd($id);
         $this->iUserRepository->deleteUser($id);
-        return $this->index()->with('uccess','le user suprimie avec success');
+        return redirect()->route('dashboard.admin')->with('uccess','le user suprimie avec success');
     }
 }

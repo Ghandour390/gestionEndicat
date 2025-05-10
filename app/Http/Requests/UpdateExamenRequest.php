@@ -21,6 +21,7 @@ class UpdateExamenRequest extends FormRequest
      */
     public function rules(): array
     {
+        // dd($this->all());
         return [
             'date_examen' => 'required|date',
             'heure_debut' => 'required',

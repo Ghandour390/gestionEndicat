@@ -1,5 +1,7 @@
 <?php
 namespace App\Repositories\Implementations;
+use App\Models\Apprenant;
+use App\Models\Formateur;
 use App\Models\Role;
 use App\Models\User;
 use App\Repositories\IUserRepository;
@@ -25,24 +27,40 @@ class UserRepository implements IUserRepository{
       }
       return false;
     }
-    public function createUser(array $Data){
+    public function createUser(array $data){
     $user = new User();
-    $user->firstname = $Data['firstname'];
-    $user->lastname = $Data['lastname'];  
-    $user->email = $Data['email'];
-    $user->password = bcrypt($Data['password']);
-    $user->phone = $Data['phone'];
-    $role = Role::where('id', $Data['role_id'])->first();
-    $user->roles()->associate($role);
-      $user->save();
-        return $user;
-    }
+          $user->firstname = $data['firstname'];
+          $user->lastname = $data['lastname'];  
+          $user->email = $data['email'];
+          $user->password = bcrypt($data['password']);
+          if ($data['photo']->hasFile('photo')) {
+            $path = $data['phone']->file('photo')->store('photos', 'public');
+            $user->photo = $path;}
+          $user->phone = $data['phone'];
+          
+          $role = Role::where('id', $data['role_id'])->first();
+          $user->roles()->associate($role);
+          if($user->roles->name=="formateur"){
+            $formateur= new Formateur();
+            $formateur->user_id=$user->id;
+            $formateur->specialite=$data['specialite'];
+          }
+          if($user->roles->name=="apprenant"){
+            $aprenant=new Apprenant();
+            $aprenant->user_id=$user->id;
+            $aprenant->nemerodebadge=$data['nemerodebadge'];
+          }
+            $user->save();
+            return $user;
+        }
+      
+      
 
     public function findByEmail($email){
         return $this->user::where('email', $email)->first();
     }
     public function getById($id){
-      $user=$this->user->where('$id')->first();
+      $user=$this->user->where('id',$id)->first();
       return $user;
     }
 
@@ -54,9 +72,24 @@ class UserRepository implements IUserRepository{
           $user->lastname = $data['lastname'];  
           $user->email = $data['email'];
           $user->password = bcrypt($data['password']);
+          if ($data['photo']->hasFile('photo')) {
+            $path = $data['phone']->file('photo')->store('photos', 'public');
+            $user->photo = $path;}
           $user->phone = $data['phone'];
+          $user->dateNaissance=['dateNaissance'];
+          
           $role = Role::where('id', $data['role_id'])->first();
           $user->roles()->associate($role);
+          if($user->roles->name=="formateur"){
+            $formateur= new Formateur();
+            $formateur->user_id=$user->id;
+            $formateur->specialite=$data['specialite'];
+          }
+          if($user->roles->name=="apprenant"){
+            $aprenant=new Apprenant();
+            $aprenant->user_id=$user->id;
+            $aprenant->nemerodebadge=$data['nemerodebadge'];
+          }
             $user->save();
             return $user;
         }

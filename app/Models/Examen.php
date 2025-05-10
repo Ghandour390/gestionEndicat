@@ -24,7 +24,7 @@ class Examen extends Model
                 ->withPivot('date_passage');
     }
 
-    public function cour()
+    public function cours()
     {
         return $this->belongsTo(Cours::class, 'cour_id');
     }

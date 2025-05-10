@@ -34,5 +34,7 @@ class Cours extends Model
     {
         return $this->hasMany(Document::class);
     }
-
+    public function ressources(){
+        return $this->hasMany(Ressource::class);
+    }
 }

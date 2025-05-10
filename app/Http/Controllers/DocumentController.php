@@ -35,9 +35,10 @@ class DocumentController extends Controller
         //         'ressource_id'=>$ressources
         //     ]
         //     ];
+        // dd($documents);
       
         // return view('dashboard.admin',compact('data','title','thead','route','column'));
-        return view('document.index',compact('documents','ressources'));
+        return view('documents.index',compact('documents','ressources'));
        
     }
 
@@ -54,7 +55,8 @@ class DocumentController extends Controller
      */
     public function store(StoreDocumentRequest $request)
     {
-        //
+        $this->iressourcerepository->createRessource($request->all());
+        return redirect()->route('documents.index')->with('success','le document create avec success');
     }
 
     /**
@@ -78,14 +80,18 @@ class DocumentController extends Controller
      */
     public function update(UpdateDocumentRequest $request, Document $document)
     {
-        //
+        $this->idocumentrepository->updateDocument($document->id,$request->all());
+        return redirect()->route('documents.index')->with('success','le document modifie avec success');
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Document $document)
-    {
-        //
+    public function destroy($id){
+    // { dd($id);
+      $del =  $this->idocumentrepository->deletedocument($id);
+        // dd($del);
+        return redirect()->route('documents.index')->with('success','document suprimie avec success');
     }
 }

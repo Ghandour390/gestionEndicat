@@ -21,6 +21,7 @@ class UpdateAdminRequest extends FormRequest
      */
     public function rules(): array
     {
+        
         return [
             'lastname' => 'required|string|max:255',
             'firstname' => 'required|string|max:255',
@@ -30,9 +31,9 @@ class UpdateAdminRequest extends FormRequest
             'role_id'=>'required',
             'couver' => 'nullable|file|mimes:jpg,png|max:2048',
             'specialite' => 'nullable|string|max:255',
-            'date_naissance' => 'nullable|date',
+            'dateNaissance' => 'nullable|date',
             'photo' => 'nullable|file|mimes:jpg,png|max:2048',
-            'numerodDeBadge' => 'nullable|string|max:255',
+            'nemerodebadge' => 'nullable|string|max:255',
         ];
     }
 }

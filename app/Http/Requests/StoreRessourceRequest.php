@@ -13,10 +13,11 @@ class StoreRessourceRequest extends FormRequest
 
     public function rules(): array
     {
+        // dd('teste');
         return [
-           'titre' => 'required|string|max:255',
+           'titre' => 'required|string',
            'description' => 'nullable|string',
-           'cour_id'=>'required|integer',
+           'cour_id'=>'required',
         ];
     }
 }

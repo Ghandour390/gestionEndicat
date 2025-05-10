@@ -10,14 +10,13 @@ class Document extends Ressource
     /** @use HasFactory<\Database\Factories\DocumentFactory> */
     use HasFactory;
     protected $fillable = [
-        'titre',
-        'description',
         'document',
     ];
-    public function cours()
-    {
-        return $this->belongsTo(Cours::class);
-    }
+    // public function cours()
+    // {
+    //     return $this->belongsTo(Cours::class);
+    // }
+    public function ressource(){return $this->belongsTo(Ressource::class);}
 }
        
    

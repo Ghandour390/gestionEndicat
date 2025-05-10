@@ -24,17 +24,17 @@ class RessourceController extends Controller
     {
         $cours = $this->iCoursRepositoryRepository->getAllCours();
         $ressources = $this->iRessourceRepository->getAllRessources();
-        $title = "Gestion des ressources";
-        $thead = ['titre', 'description', 'cours_id'];
-        $route = '/ressources';
-        $column = [
-            'titre' => 'text',
-            'description' => 'text',
-            'select' => [
-                'cours_id' => $cours
-            ]
-        ];
-        return view('dashboard.admin', compact('ressources', 'title', 'thead', 'route', 'column'));
+        // $title = "Gestion des ressources";
+        // $thead = ['titre', 'description', 'cours_id'];
+        // $route = '/ressources';
+        // $column = [
+        //     'titre' => 'text',
+        //     'description' => 'text',
+        //     'select' => [
+        //         'cours_id' => $cours
+        //     ]
+        // ];
+        return view('ressources.index', compact('ressources', 'cours'));
     }
 
     public function edit($id)
@@ -49,8 +49,7 @@ class RessourceController extends Controller
 
     public function update(UpdateRessourceRequest $request, $id)
     {
-        $ressource = Ressource::findOrFail($id);
-        $ressource->update($request->validated());
+       $this->iRessourceRepository->updateRessource($id,$request->all());
         return redirect()->back()->with('success', 'Ressource mise à jour avec succès');
     }
 
@@ -67,5 +66,10 @@ class RessourceController extends Controller
     {
         $ressource = $this->iRessourceRepository->getRessourceById($id);
         return response()->json($ressource);
+    }
+    public function store(StoreRessourceRequest $request){
+        dd($request->all());
+        $this->iRessourceRepository->createRessource($request->all());
+        return redirect()->route('ressources.index')->with('saccuss','resource create avec succuss');
     }
 }

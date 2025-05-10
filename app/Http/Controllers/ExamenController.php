@@ -21,24 +21,25 @@ class ExamenController extends Controller
 
     public function index()
     {
-        $data = $this->iExamenRepository->getAllExamens();
-        $title = "Gestion des examens";
-        $thead = ['note', 'date_examen', 'heure_debut', 'heure_fin', 'status', 'cour_id'];
-        $route = '/examens'; 
-        $column = [
-            'note' => 'number',
-            'date_examen' => 'date',
-            'heure_debut' => 'time',
-            'heure_fin' => 'time',
-            'status' => [
-                'select' => ['pinding'=>'pinding', 'encoure'=>'encoure', 'annule'=>'annule']
-            ],
-            'cour_id' => [
-                'select' => $this->iCoursRepository->getAllCours()
-            ]
-        ];
+        $examens = $this->iExamenRepository->getAllExamens();
+        $cours=$this->iCoursRepository->getAllCours();
+        // $title = "Gestion des examens";
+        // $thead = ['note', 'date_examen', 'heure_debut', 'heure_fin', 'status', 'cour_id'];
+        // $route = '/examens'; 
+        // $column = [
+        //     'note' => 'number',
+        //     'date_examen' => 'date',
+        //     'heure_debut' => 'time',
+        //     'heure_fin' => 'time',
+        //     'status' => [
+        //         'select' => ['pinding'=>'pinding', 'encoure'=>'encoure', 'annule'=>'annule']
+        //     ],
+        //     'cour_id' => [
+        //         'select' => $this->iCoursRepository->getAllCours()
+        //     ]
+        // ];
         
-        return view('dashboard.admin', compact('data', 'title', 'thead', 'route', 'column'));
+        return view('examens.index', compact('examens','cours'));
     }
 
     public function create()
@@ -48,6 +49,7 @@ class ExamenController extends Controller
 
     public function store(StoreExamenRequest $request)
     {
+        // dd($request->all());
         $this->iExamenRepository->createExamen($request->validated());
         return redirect()->back()->with('success', 'Examen créé avec succès');
     }
@@ -64,7 +66,9 @@ class ExamenController extends Controller
 
     public function update(UpdateExamenRequest $request, Examen $examen)
     {
-        $examen->update($request->validated());
+        // dd($request->all());
+        // dd(Examen::find($examen->id));
+        $this->iExamenRepository->updateExamen($examen->id, $request->all());
         return redirect()->back()->with('success', 'Examen mis à jour avec succès');
     }
 

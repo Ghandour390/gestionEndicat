@@ -23,14 +23,14 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $data = $this->iRoleRepositiry->getAllRoles();
-        $title = "gestion Role";
-        $thead = ['name', 'description'];
-        $column=[
-            'name'=>'text',
-            'description'=>'text'
-        ];
-        return view('dashboard.admin', compact('data', 'title', 'thead','column'));
+        $roles = $this->iRoleRepositiry->getAllRoles();
+        // $title = "gestion Role";
+        // $thead = ['name', 'description'];
+        // $column=[
+        //     'name'=>'text',
+        //     'description'=>'text'
+        // ];
+        return view('roles.index', compact('roles'));
        
     }
 

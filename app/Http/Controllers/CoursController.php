@@ -5,15 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\Cours;
 use App\Http\Requests\StoreCoursRequest;
 use App\Http\Requests\UpdateCoursRequest;
+use App\Repositories\IClasseRepository;
 use App\Repositories\ICoursRepository;
 
 
 class CoursController extends Controller
 {
     protected $iacoursrepository;
+    protected $iaclasseRepository;
 
-    public function __construct(ICoursRepository $iCoursRepository)
+    public function __construct(ICoursRepository $iCoursRepository,IClasseRepository $iClasseRepository)
     {
+        $this->iaclasseRepository=$iClasseRepository;
+    
         $this->iacoursrepository=$iCoursRepository;
     }
     /**
@@ -21,18 +25,20 @@ class CoursController extends Controller
      */
     public function index()
     {
-        $data=$this->iacoursrepository->getAllCours();
+        $cours=$this->iacoursrepository->getAllCours();
+        $classes=$this->iaclasseRepository->getAllClass();
         // dd($data);
         
-        $title="gestion cours";
-        $thead =['titre','description','caver'];
-        $route='/cours';
-        $column=[
-            'titre'=>'text',
-            'description'=>'text',
-            'caver'=>'file'
-        ];
-        return view('dashboard.admin',compact('data','title','thead','route','column'));
+        // $title="gestion cours";
+        // $thead =['titre','description','caver'];
+        // $route='/cours';
+        // $column=[
+        //     'titre'=>'text',
+        //     'description'=>'text',
+        //     'caver'=>'file'
+        // ];
+        // dd($classes);
+        return view('cours.index',compact('cours','classes'));
     }
 
     /**
@@ -48,7 +54,8 @@ class CoursController extends Controller
      */
     public function store(StoreCoursRequest $request)
     {
-        //
+        $this->iacoursrepository->createCour($request->all());
+        return redirect()->route('cours.index')->with('success','le cours create avec success');
     }
 
     /**
@@ -72,7 +79,8 @@ class CoursController extends Controller
      */
     public function update(UpdateCoursRequest $request, Cours $cours)
     {
-        //
+        $this->iacoursrepository->updateCour($cours->id,$request->all());
+        return redirect()->route('cours.index')->with('success','le cours update avec success');
     }
 
     /**
@@ -80,6 +88,7 @@ class CoursController extends Controller
      */
     public function destroy(Cours $cours)
     {
-        //
+        $this->iacoursrepository->deleteCours($cours->id);
+        return redirect()->route('cours.index')->with('success','le cours a été supprimé avec succès');
     }
 }

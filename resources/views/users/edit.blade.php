@@ -21,11 +21,11 @@
                   </button>
               </div> --}}
               <!-- Modal body -->
-              <form method="POST" action="{{ isset($user) ? route('users.update', $user) : route('users.store') }}" enctype="multipart/form-data" class="space-y-4 max-w-2xl mx-auto p-6 bg-white rounded-xl shadow">
+              <form method="POST" action="{{ route('admin.update', $user)  }}" enctype="multipart/form-data" class="space-y-4 max-w-2xl mx-auto p-6 bg-white rounded-xl shadow">
                 @csrf
-                @if(isset($user))
+                
                     @method('PUT')
-                @endif
+              
             
                 <!-- Nom -->
                 <div>

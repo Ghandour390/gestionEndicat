@@ -26,7 +26,7 @@ Route::get('/forms', function () {
 
 // route::get('/gestionUsers',[AdminController::class,'']);
 
-route::resource('users',UserController::class);
+// route::resource('users',UserController::class);
 
 // auth routes-----------------------------
 Route::get('/login', function () { return view('auth.login');})->name('login');
@@ -41,13 +41,18 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard.admin');
 Route::get('/admins',[AdminController::class,'index']);
-Route::POST('admin/create',[AdminController::class,'store']);
-Route::resource('/apprenants',ApprenantController::class);
+Route::post('/admin/create',[AdminController::class,'store'])->name('admin.store');
+Route::put('/admin/update',[AdminController::class,'update'])->name('admin.update');
+Route::delete('/admin/delete/{id}',[AdminController::class,'destroy'])->name('admin.destroy');
+// Route::resource('/apprenants',ApprenantController::class);
 
 
 route::resource('/classes',ClasseController::class);
 // ---------------->Documment----------------------------
-Route::resource('/documents',DocumentController::class);
+Route::get('/documents',[DocumentController::class,'index'])->name('documents.index');
+route::post('/documents/create',[DocumentController::class,'store'])->name('documents.store');
+route::put('/documents/update',[DocumentController::class,'update'])->name('documents.update');
+route::delete('/documents/delete/{id}',[DocumentController::class,'destroy'])->name('documents.destroy');
 
 
 // --------------Vidioe---------------------------------------
@@ -75,7 +80,10 @@ Route::get('classerooms',[ClasseRoomController::class,'index']);
 // -----------Examen-------------------------------
 Route::resource("/examens",ExamenController::class);
 // ----------------ressources-------------------------
-route::resource('/ressources',RessourceController::class);
+route::get('/ressources',[RessourceController::class,'index'])->name('ressources.index');
+route::post('/ressources/create',[RessourceController::class,'store'])->name('ressources.store');
+route::delete('/ressource/{id}',[RessourceController::class,'destroy'])->name('ressources.delete');
+route::put('ressources/update',[RessourceController::class,'update'])->name('ressources.update');
 Route::get('/ressources/{id}/details', [RessourceController::class, 'getDetails'])->name('ressources.details');
 
 // ---------formateur----------------------------
