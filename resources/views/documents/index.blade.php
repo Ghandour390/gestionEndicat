@@ -10,21 +10,26 @@
     <!-- Tableau des utilisateurs -->
     <div class="bg-white rounded-lg shadow overflow-hidden">
         <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
-                <tr>
+            <thead class="bg-gray-50">                <tr>
                     <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">document</th>
                     <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">resource</th>
                     <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">cours</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Télécharger</th>
                     <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
                 @foreach($documents as $document)
-                {{-- @dd($document->ressource->cours) --}}
-                <tr class="hover:bg-gray-40">
+                {{-- @dd($document->ressource->cours) --}}                <tr class="hover:bg-gray-40">
                     <td class="px-3 py-2 whitespace-nowrap">{{ $document->document }}</td>
                     <td class="px-3 py-2 whitespace-nowrap">{{ $document->ressource->titre }}</td>
                     <td class="px-3 py-2 whitespace-nowrap">{{ $document->ressource->cours->titre }}</td>
+                    <td class="px-3 py-2 whitespace-nowrap">
+                        <a href="{{ asset('storage/' . $document->document) }}" download
+                            class="inline-flex items-center justify-center px-3 py-1 text-sm font-medium text-blue-600 hover:text-blue-800">
+                            <span>📥 Télécharger</span>
+                        </a>
+                    </td>
                     <td class="px-4 py-2">
                         <!-- Bouton Éditer -->
                         <!-- Bouton d'édition -->

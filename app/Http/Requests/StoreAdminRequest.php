@@ -31,8 +31,9 @@ class StoreAdminRequest extends FormRequest
             'dateNaissance' => 'required|date',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'specialite' => 'required|string|max:255',
-            'nemerodebadge' => 'required|integer|max:255',
+            'numerodebadge' => 'required|integer|max:255',
             'role_id'=>'required',
+            'peutGerer'=>'nullable'
             
         ];
     }

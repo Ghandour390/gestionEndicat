@@ -21,7 +21,11 @@ class UpdateAdminRequest extends FormRequest
      */
     public function rules(): array
     {
-        
+        // dd($this->all());
+        // $this->validate(rules: [
+        //     'couver' => 'nullable|file|mimes:jpg,png|max:2048',
+        //     'photo' => 'nullable|file|mimes:jpg,png|max:2048',
+        // ]);
         return [
             'lastname' => 'required|string|max:255',
             'firstname' => 'required|string|max:255',
@@ -32,7 +36,7 @@ class UpdateAdminRequest extends FormRequest
             'couver' => 'nullable|file|mimes:jpg,png|max:2048',
             'specialite' => 'nullable|string|max:255',
             'dateNaissance' => 'nullable|date',
-            'photo' => 'nullable|file|mimes:jpg,png|max:2048',
+            'photo' => 'nullable',
             'nemerodebadge' => 'nullable|string|max:255',
         ];
     }

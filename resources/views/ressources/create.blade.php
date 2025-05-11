@@ -1,8 +1,5 @@
 <!-- Bouton pour ouvrir le modal -->
-<button data-modal-target="default-modal" data-modal-toggle="default-modal"
-    class="mb-4 px-4 py-2 text-white bg-blue-800 rounded hover:bg-blue-900 transition">
-    ➕ Créer une ressource
-</button>
+
 
 <!-- Modal principal -->
 <div id="default-modal" tabindex="-1" aria-hidden="true"

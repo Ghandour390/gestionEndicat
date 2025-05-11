@@ -14,7 +14,11 @@
                 <div class="flex items-center">
                     <button class="flex items-center max-w-xs text-sm bg-gray-800 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500" id="user-menu-button">
                         <span class="sr-only">Ouvrir le menu utilisateur</span>
-                        <img class="w-8 h-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                        @if(auth()->user()->photo)
+                            <img class="w-8 h-8 rounded-full" src="{{ asset('storage/' . auth()->user()->photo) }}" alt="{{ auth()->user()->firstname }} {{ auth()->user()->lastname }}">
+                        @else
+                            <img class="w-8 h-8 rounded-full" src="{{ asset('images/default-avatar.png') }}" alt="Default avatar">
+                        @endif
                     </button>
                     <span class="ml-3 text-sm font-medium text-gray-700">Admin User</span>
                     <i data-lucide="chevron-down" class="w-5 h-5 ml-1 text-gray-400"></i>

@@ -31,7 +31,7 @@
                     <td class="px-3 py-2 whitespace-nowrap">{{ $user->phone }}</td>
                     <td class="px-3 py-2 whitespace-nowrap">{{ $user->dateNaissance }}</td>
                     <td class="px-4 py-2 whitespace-nowrap">
-                        <img src="{{ asset('storage/public/' . $user->photo) }}" alt="Photo {{ $user->firstname }}" class="h-12 rounded" />
+                        <img src="{{ $user->photo }}" alt="Photo {{ $user->firstname }}" class="h-12 rounded" />
                     </td>
                     <td class="px-3 py-2 whitespace-nowrap">
                         <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
@@ -52,7 +52,7 @@
     <div class="relative w-full max-w-2xl">
         <!-- Contenu du modal -->
         <div class="bg-white rounded-lg shadow dark:bg-gray-700">
-            <form method="POST" action="{{ route('admin.update', $user) }}" enctype="multipart/form-data"
+            <form method="POST" action="{{ route('admin.update', $user->id) }}" enctype="multipart/form-data"
                 class="space-y-6 p-6">
                 @csrf
                 @method('PUT')

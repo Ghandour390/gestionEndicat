@@ -18,5 +18,9 @@ class Video extends Model
     {
         return $this->belongsTo(Cours::class);
     }
+    public function ressource()
+    {
+        return $this->belongsTo(Ressource::class);
+    }
     
 }

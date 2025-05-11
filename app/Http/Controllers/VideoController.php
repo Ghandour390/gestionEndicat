@@ -26,7 +26,7 @@ class VideoController extends Controller
     public function index()
     {
         $vidieo=$this->iVideoRepository->getAllVideos();
-        $ressource=$this->iRessourceRepository->getallRessources();
+        $ressources=$this->iRessourceRepository->getallRessources();
         // $title="gestion videos";
         // $thead =['contenu','titre'];
         // $route="/videos";
@@ -38,7 +38,7 @@ class VideoController extends Controller
         //     ]
         // ];
         // return view('dashboard.admin',compact('data','title','thead','route','column'));
-        return view('video.index',compact('vidieo','ressource'));
+        return view('videos.index',compact('vidieo','ressources'));
     }
 
     /**
@@ -47,6 +47,10 @@ class VideoController extends Controller
     public function create()
     {
         //
+    }
+    public function showVideos($courid){
+        $videos=$this->iVideoRepository->getAllVideosbyCours($courid);
+        return view('courses.show-vedios',compact('videos'));
     }
 
     /**

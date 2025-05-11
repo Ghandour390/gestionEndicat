@@ -92,7 +92,7 @@
                 <!-- Numéro de badge -->
                 <div>
                     <label class="block mb-1 font-semibold">Numéro de badge</label>
-                    <input type="number" name="nemerodebadge"
+                    <input type="number" name="numerodebadge"
                         class="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring focus:ring-blue-300">
                 </div>
 

@@ -6,34 +6,50 @@ use App\Models\Apprenant;
 use App\Http\Requests\StoreApprenantRequest;
 use App\Http\Requests\UpdateApprenantRequest;
 use App\Repositories\IApprenantRepository;
+use App\Repositories\ICoursRepository;
+use App\Repositories\IRessourceRepository;
 
 
 class ApprenantController extends Controller
 {
     protected $iapprenantRepository;
+    protected $iCoursRepository;
+     protected $iRessourceRepository;
 
-    public function __construct(IApprenantRepository $iApprenantRepository)
+    public function __construct(IApprenantRepository $iApprenantRepository,ICoursRepository $iCoursRepository ,IRessourceRepository $iRessourceRepository)
     {
         $this->iapprenantRepository=$iApprenantRepository;
+        $this->iCoursRepository=$iCoursRepository;
+        $this->iRessourceRepository=$iRessourceRepository;
     }
     public function index()
     {
        $data= $this->iapprenantRepository->getAllApprenants();
-    //    dd($data);
-       $title="gestion des apprenant";
-       $thead = ['numerodebadge','lastname','firstname','phone','email'];
-       $route='/apprenants';
+    // //    dd($data);
+    //    $title="gestion des apprenant";
+    //    $thead = ['numerodebadge','lastname','firstname','phone','email'];
+    //    $route='/apprenants';
        return view('dashboard.admin',compact('data','title','thead','apprenants'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function getAllCourses()
     {
-        //
+        $courses=$this->iCoursRepository->getAllCours();
+        return view('courses.courses',compact('courses'));
     }
 
+    public function getAllResourcesTypeVedioByCourse($coursId)
+    {
+    
+       
+        
+
+    } 
+
+    
     /**
      * Store a newly created resource in storage.
      */

@@ -15,45 +15,46 @@ use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
     protected IUserRepository $iUserRepository;
-    public function  __construct(IUserRepository $iUserRepository)
+    public function __construct(IUserRepository $iUserRepository)
     {
         $this->iUserRepository = $iUserRepository;
     }
-public function index(){
+    public function index()
+    {
 
 
-return view("auth.login");
-}  
-  public function login(LoginRequest $request)
+        return view("auth.login");
+    }
+    public function login(LoginRequest $request)
     {
         // dd($request);
         // if (!$request) {
         //     return back();
         // }
 
-// dd(Auth::attempt(['email' => $request->email,'password' => $request->password]));
+        // dd(Auth::attempt(['email' => $request->email,'password' => $request->password]));
 // dd($request->password);
 
-        if (!Auth::attempt(['email' => $request->email,'password' => $request->password])) {
-// dd(['email' => $request->email,'password' => $request->password]);
+        if (!Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+            // dd(['email' => $request->email,'password' => $request->password]);
 
-            $user =   $this->iUserRepository->findByEmail($request->email);
-       
+            $user = $this->iUserRepository->findByEmail($request->email);
+
 
             Auth::login($user);
-           
+
             $request->session()->regenerate();
-    
-            return redirect("/dashboard")->with('succuss','login sucessful');
+
+            return redirect("/dashboard")->with('succuss', 'login sucessful');
         }
- 
-     
+
+
         return redirect('/')->with('success', 'Login not successful');
     }
- 
+
     public function logout(Request $request)
     {
-        dd("ifdhds");
+        // dd("ifdhds");
         Auth::logout();
 
         $request->session()->invalidate();
@@ -64,25 +65,23 @@ return view("auth.login");
 
     public function register(RegisterRequest $request)
     {
-        
+        // dd($request->validated());
+        // dd('fdghjkl');;
 
         if (!$request->validated()) {
-            return redirect()->route('register')->with('errour','validie les champ');
+            return redirect()->route('register')->with('errour', 'validie les champ');
         }
+    
+            $data = $request->all();
+            $data['role_id'] = 3;
+
+            // dd($data);
+
+            // $data['password'] =hash::make( $data['password']);
+
+            $user = $this->iUserRepository->register($data);
+            // dd($user);
+            return redirect("/login");
        
-
-       try {
-        $data = $request->all();
-        $data['role_id'] = 3;
-        // dd($data);
-
-        $data['password'] =Hash::make($data['password']);
-
-        $this->iUserRepository->createUser($data);
-
-        return redirect("/login");
-       } catch (\Throwable $th) {
-        return redirect('/register')->with('errour','$th');
-       }
     }
 }

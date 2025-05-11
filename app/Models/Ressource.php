@@ -16,6 +16,9 @@ class Ressource extends Model
         'cours_id'
     ];
 
+    public function videos(){return $this->hasMany(Video::class);}
+    public function documents(){return $this->hasMany(Document::class);}
+
     public function cours()
     {
         return $this->belongsTo(Cours::class);

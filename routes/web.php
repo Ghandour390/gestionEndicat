@@ -22,6 +22,15 @@ Route::get('/', function () {
 Route::get('/forms', function () {
     return view('forms');
 });
+Route::get('/courses', function () {
+    return view('courses.courses');
+});
+Route::get('/show-document', function () {
+    return view('courses.show-document');
+});
+// Route::get('/show-vedios', function () {
+//     return view('courses.show-vedios');
+// });
 
 
 // route::get('/gestionUsers',[AdminController::class,'']);
@@ -42,7 +51,7 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard.admin');
 Route::get('/admins',[AdminController::class,'index']);
 Route::post('/admin/create',[AdminController::class,'store'])->name('admin.store');
-Route::put('/admin/update',[AdminController::class,'update'])->name('admin.update');
+Route::put('/admin/update/{id}',[AdminController::class,'update'])->name('admin.update');
 Route::delete('/admin/delete/{id}',[AdminController::class,'destroy'])->name('admin.destroy');
 // Route::resource('/apprenants',ApprenantController::class);
 
@@ -53,10 +62,13 @@ Route::get('/documents',[DocumentController::class,'index'])->name('documents.in
 route::post('/documents/create',[DocumentController::class,'store'])->name('documents.store');
 route::put('/documents/update',[DocumentController::class,'update'])->name('documents.update');
 route::delete('/documents/delete/{id}',[DocumentController::class,'destroy'])->name('documents.destroy');
+route::get('/courses',[ApprenantController::class,'getAllCourses'])->name('courses.getAllCourses');
 
 
 // --------------Vidioe---------------------------------------
 Route::resource('/videos',VideoController::class);
+route::get('/show-vedios/{id}',[VideoController::class,'showVideos'])->name('showVideos');
+
 
 
 

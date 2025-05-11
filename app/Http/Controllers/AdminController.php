@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 
 use App\Enums\Specialite;
 use App\Models\Admin;
+use App\Models\User;
 use App\Repositories\IRoleRepository;
 use App\Repositories\IUserRepository;
 use App\Repositories\IAdminRepository;
 
 use App\Http\Requests\StoreAdminRequest;
 use App\Http\Requests\UpdateAdminRequest;
+use Cloudinary\Cloudinary;
 use Exception;
 use Illuminate\Http\Request;
 use function Laravel\Prompts\select;
@@ -49,12 +51,18 @@ class AdminController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreAdminRequest $request)
     {
-    // dd($request->all());
-       $this->iUserRepository->createUser($request->all());
-        return redirect()->route('dashboard.admin');
- 
+       
+          
+
+            $userData = $request->all();
+            if(!$userData['peutGerer']){$userData['peutGerer']=1;}
+
+            $this->iUserRepository->createUser($userData);
+            return redirect()->route('dashboard.admin')->with('success', 'Utilisateur créé avec succès');
+
+       
     }
 
     /**
@@ -76,16 +84,18 @@ class AdminController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateAdminRequest $request)
+    public function update(UpdateAdminRequest $request, $id)
     {
-        // dd($request->all());
-        $this->iUserRepository->updateUser($request->id,$request->all());
-        return redirect()->route('dashboard.admin')->with('success','user update avec saccess');
+        // dd($id);
+        // dd($request->id);
+            $userData = $request->all();
+            $this->iUserRepository->updateUser($id, $userData);
+            return redirect()->route('dashboard.admin')->with('success', 'Utilisateur mis à jour avec succès');
+            
     }
-   
     /**
      * Remove the specified resource from storage.
-     */
+*/
     public function destroy($id)
     {
         // dd($id);

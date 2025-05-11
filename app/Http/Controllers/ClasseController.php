@@ -22,25 +22,25 @@ class ClasseController extends Controller
     }
     public function index()
     {
-        $data=$this->iclassrapository->getAllClass();
+        $classes=$this->iclassrapository->getAllClass();
         $classerooms= $this->iClasseroomRepository->getAllClassRooms();
-        // dd($classeroom);
-    //   dd($classerooms);
-       $title="gestion des classes";
-       $thead = ['name'];
-       $route='/classes';
-       $column=[
-        'name'=>'text',
-        'select'=>[
-            'classeroom_id'=>[
-                $classerooms
-            ]
-        ]
+    //     // dd($classeroom);
+    // //   dd($classerooms);
+    //    $title="gestion des classes";
+    //    $thead = ['name'];
+    //    $route='/classes';
+    //    $column=[
+    //     'name'=>'text',
+    //     'select'=>[
+    //         'classeroom_id'=>[
+    //             $classerooms
+    //         ]
+    //     ]
 
-            ];
+    //         ];
            
 
-        return view('dashboard.admin',compact('data','title','thead','route','column'));
+        return view('classes.index',compact('classes','classerooms'));
     }
 
     /**
@@ -48,7 +48,7 @@ class ClasseController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -56,7 +56,8 @@ class ClasseController extends Controller
      */
     public function store(StoreClasseRequest $request)
     {
-        //
+        $this->iclassrapository->createClass($request->all());
+        return redirect()->back()->with('success', 'Classe created successfully');
     }
 
     /**
@@ -80,7 +81,8 @@ class ClasseController extends Controller
      */
     public function update(UpdateClasseRequest $request, Classe $classe)
     {
-        //
+        $this->iclassrapository->updateClass($request->id, $request->all());
+        return redirect()->back()->with('success', 'Classe updated successfully');
     }
 
     /**
@@ -88,6 +90,7 @@ class ClasseController extends Controller
      */
     public function destroy(Classe $classe)
     {
-        //
+        $this->iclassrapository->deleteClass($classe->id);
+        return redirect()->back()->with('success', 'Classe deleted successfully');
     }
 }

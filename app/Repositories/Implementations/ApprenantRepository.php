@@ -15,4 +15,8 @@ class ApprenantRepository implements IApprenantRepository{
 
     public function getAllApprenants(){return Apprenant::all();}
 
+    // public function courses(){
+
+    // }
+
 }

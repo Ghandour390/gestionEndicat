@@ -25,32 +25,76 @@ class CoursRepository implements ICoursRepository {
         return false;
     }
 
-    public function createCour(array $Data) {
+    public function createCour(array $data) {
         $cour = new Cours();
-        if (isset($Data['couver']) && $Data['couver'] instanceof UploadedFile) {
-            $cour->cour = $Data['couver']->store('cours', 'public');
-        }
-        $cour->titre = $Data['titre'];  
-        $cour->description = $Data['description'];
+       if (isset($data['couver']) && $data['couver'] instanceof \Illuminate\Http\UploadedFile) {
+      // dd($data['photo']);
+        $cloudinary = new \Cloudinary\Cloudinary([
+            'cloud' => [
+                'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
+                'api_key' => env('CLOUDINARY_API_KEY'),
+                'api_secret' => env('CLOUDINARY_API_SECRET'),
+            ],
+        ]);
+
+        $upload = $cloudinary->uploadApi()->upload($data['couver']->getRealPath(), [
+
+            'folder' => 'cours',
+            'resource_type' => 'image',
+            'http_options' => [
+                'verify' => false, 
+            ],
+        ]);
+
+
+        $cour->couver = $upload['secure_url'];
+        $cour->titre = $data['titre'];  
+        $cour->description = $data['description'];
         
-        $classe = Classe::where('id', $Data['classe_id'])->first();
+        $classe = Classe::where('id', $data['classe_id'])->first();
         $cour->classe()->associate($classe);
         $cour->save();
         return $cour;
     }
-    public function updateCour($id, array $data) {
+}
+
+
+
+    public function updateCour($id, array $data)
+     {
         $cour = Cours::find($id);
         if($cour) {
-            if (isset($data['couver']) && $data['couver'] instanceof UploadedFile) {
-                $cour->cour = $data['couver']->store('cours', 'public');
-            }
-            $cour->titre = $data['titre'];
-            $cour->description = $data['description'];
-            $classe = Classe::where('id', $data['classe_id'])->first();
-            $cour->classe()->associate($classe);
-            $cour->save();
-            return $cour;
-        }
-        return null;
+             if (isset($data['couver']) && $data['couver'] instanceof \Illuminate\Http\UploadedFile) {
+      // dd($data['photo']);
+        $cloudinary = new \Cloudinary\Cloudinary([
+            'cloud' => [
+                'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
+                'api_key' => env('CLOUDINARY_API_KEY'),
+                'api_secret' => env('CLOUDINARY_API_SECRET'),
+            ],
+        ]);
+    
+        $upload = $cloudinary->uploadApi()->upload($data['couver']->getRealPath(), [
+
+            'folder' => 'cours',
+            'resource_type' => 'image',
+            'http_options' => [
+                'verify' => false, 
+            ],
+        ]);
     }
+    
+        $cour->couver = $upload['secure_url'];
+        $cour->titre = $data['titre'];  
+        $cour->description = $data['description'];
+        
+        $classe = Classe::where('id', $data['classe_id'])->first();
+        $cour->classe()->associate($classe);
+        $cour->save();
+        return $cour;
+        }
+  
+        return null;
+    }       
+
 }

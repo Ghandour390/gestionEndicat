@@ -8,5 +8,6 @@ interface IUserRepository{
     public function findByEmail($email);
     public function getById($id);
     public function updateUser($id, array $data);
+    public function register(array $data);
     
 }
